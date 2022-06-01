@@ -1,6 +1,9 @@
 package ua.foxminded.herasimov.university.model;
 
-import ua.foxminded.herasimov.university.entity.*;
+import ua.foxminded.herasimov.university.entity.Group;
+import ua.foxminded.herasimov.university.entity.Lesson;
+import ua.foxminded.herasimov.university.entity.Person;
+import ua.foxminded.herasimov.university.entity.Teacher;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -14,16 +17,45 @@ public class Timetable {
     private Teacher teacher;
     private Group group;
     private DayOfWeek day;
+    
+    public static class Builder {
+        private Timetable newTimetable;
 
-    public Timetable(LocalTime time, Lesson lesson, Teacher teacher, Group group, DayOfWeek day) {
-        this.time = time;
-        this.lesson = lesson;
-        this.teacher = teacher;
-        this.group = group;
-        this.day = day;
+        public Builder() {
+            newTimetable = new Timetable();
+        }
+
+        public Builder withTime(LocalTime time) {
+            newTimetable.time = time;
+            return this;
+        }
+
+        public Builder withLesson(Lesson lesson) {
+            newTimetable.lesson = lesson;
+            return this;
+        }
+
+        public Builder withTeacher(Teacher teacher) {
+            newTimetable.teacher = teacher;
+            return this;
+        }
+
+        public Builder withGroup(Group group) {
+            newTimetable.group = group;
+            return this;
+        }
+
+        public Builder withDay(DayOfWeek day) {
+            newTimetable.day = day;
+            return this;
+        }
+
+        public Timetable build() {
+            return newTimetable;
+        }
     }
 
-    public List<Integer> getStudentIds(){
+    public List<Integer> getStudentIds() {
         return group.getStudents().stream().map(Person::getId).collect(Collectors.toList());
     }
 
