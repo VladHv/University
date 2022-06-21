@@ -1,7 +1,7 @@
 package ua.foxminded.herasimov.university.service;
 
-import ua.foxminded.herasimov.university.dao.GroupDao;
-import ua.foxminded.herasimov.university.dao.TimetableDao;
+import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
+import ua.foxminded.herasimov.university.dao.impl.TimetableDaoImpl;
 import ua.foxminded.herasimov.university.entity.Timetable;
 
 import java.time.DayOfWeek;
@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class UniversityService {
 
-    private TimetableDao timetableDao;
-    private GroupDao groupDao;
+    private TimetableDaoImpl timetableDao;
+    private GroupDaoImpl groupDao;
 
-    public UniversityService(TimetableDao timetableDao, GroupDao groupDao) {
+    public UniversityService(TimetableDaoImpl timetableDao, GroupDaoImpl groupDao) {
         this.timetableDao = timetableDao;
         this.groupDao = groupDao;
     }
@@ -35,7 +35,7 @@ public class UniversityService {
 
     public List<Timetable> getStudentTimetableForDay(Integer studentId, DayOfWeek day) {
         List<Timetable> monthTimetable = timetableDao.findAll();
-        Integer groupId = groupDao.getGroupByStudentId(studentId);
+        Integer groupId = groupDao.getGroupIdByStudentId(studentId);
         return monthTimetable.stream()
                              .filter(t -> t.getGroupId().equals(groupId))
                              .filter(t -> t.getDay().equals(day.getValue()))
@@ -44,7 +44,7 @@ public class UniversityService {
 
     public List<Timetable> getStudentTimetableForMonth(Integer studentId) {
         List<Timetable> monthTimetable = timetableDao.findAll();
-        Integer groupId = groupDao.getGroupByStudentId(studentId);
+        Integer groupId = groupDao.getGroupIdByStudentId(studentId);
         return monthTimetable.stream()
                              .filter(t -> t.getGroupId().equals(groupId))
                              .collect(Collectors.toList());

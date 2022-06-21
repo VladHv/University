@@ -2,8 +2,8 @@ package ua.foxminded.herasimov.university;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ua.foxminded.herasimov.university.config.SpringConfig;
-import ua.foxminded.herasimov.university.dao.GroupDao;
-import ua.foxminded.herasimov.university.dao.TimetableDao;
+import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
+import ua.foxminded.herasimov.university.dao.impl.TimetableDaoImpl;
 import ua.foxminded.herasimov.university.entity.Timetable;
 import ua.foxminded.herasimov.university.service.UniversityService;
 
@@ -16,15 +16,14 @@ public class UniversityApp {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
 
-        TimetableDao timetableDao = context.getBean(TimetableDao.class);
-        GroupDao groupDao = context.getBean(GroupDao.class);
+        TimetableDaoImpl timetableDao = context.getBean(TimetableDaoImpl.class);
+        GroupDaoImpl groupDao = context.getBean(GroupDaoImpl.class);
 
         UniversityService service = new UniversityService(timetableDao, groupDao);
 
         List<Timetable> timetables = service.getStudentTimetableForDay(1, DayOfWeek.MONDAY);
 
         timetables.forEach(System.out::println);
-
 
 
     }

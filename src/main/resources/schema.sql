@@ -27,12 +27,6 @@ CREATE TABLE teacher_position
     position VARCHAR(20)
 );
 
-INSERT INTO teacher_position (id, position)
-VALUES
-    (1, 'PROFESSOR'),
-    (2, 'PHD'),
-    (3, 'DEAN');
-
 CREATE TABLE teachers
 (
     id SERIAL PRIMARY KEY,

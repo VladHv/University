@@ -6,6 +6,13 @@ VALUES
     ('JKL'),
     ('MNO');
 
+
+INSERT INTO teacher_position (id, position)
+VALUES
+    (1, 'PROFESSOR'),
+    (2, 'PHD'),
+    (3, 'DEAN');
+
 INSERT INTO students (first_name, last_name, faculty, ticket, group_id)
 VALUES
     ('Bob', 'MacBob', 'Computer Science', 123, 1),

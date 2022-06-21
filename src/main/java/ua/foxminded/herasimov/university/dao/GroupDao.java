@@ -1,18 +1,8 @@
 package ua.foxminded.herasimov.university.dao;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import ua.foxminded.herasimov.university.entity.Group;
 
-import javax.sql.DataSource;
+public interface GroupDao extends Dao<Integer, Group> {
 
-public class GroupDao {
-
-    private final JdbcTemplate jdbcTemplate;
-
-    public GroupDao(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    public Integer getGroupByStudentId(Integer studentId) {
-        return jdbcTemplate.queryForObject("SELECT group_id FROM students WHERE id = (?)", Integer.class, studentId);
-    }
+    Integer getGroupIdByStudentId(Integer studentId);
 }

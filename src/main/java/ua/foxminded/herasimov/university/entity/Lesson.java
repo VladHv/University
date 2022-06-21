@@ -8,13 +8,31 @@ public class Lesson {
     private String name;
     private Integer classroom;
 
-    public Lesson(Integer id, String name, Integer classroom) {
-        this.id = id;
-        this.name = name;
-        this.classroom = classroom;
-    }
+    public static class Builder {
+        private Lesson newLesson;
 
-    public Lesson() {
+        public Builder() {
+            newLesson = new Lesson();
+        }
+
+        public Builder withId(Integer id) {
+            newLesson.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            newLesson.name = name;
+            return this;
+        }
+
+        public Builder withClassroom(Integer classroom) {
+            newLesson.classroom = classroom;
+            return this;
+        }
+
+        public Lesson build() {
+            return newLesson;
+        }
     }
 
     public Integer getId() {

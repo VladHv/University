@@ -1,4 +1,4 @@
-package ua.foxminded.herasimov.university.dao;
+package ua.foxminded.herasimov.university.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import ua.foxminded.herasimov.university.entity.Timetable;

@@ -8,13 +8,31 @@ public class Group {
     private String name;
     private List<Student> students;
 
-    public Group(Integer id, String name, List<Student> students) {
-        this.id = id;
-        this.name = name;
-        this.students = students;
-    }
+    public static class Builder {
+        private Group newGroup;
 
-    public Group() {
+        public Builder() {
+            newGroup = new Group();
+        }
+
+        public Builder withId(Integer id) {
+            newGroup.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            newGroup.name = name;
+            return this;
+        }
+
+        public Builder withStudents(List<Student> students) {
+            newGroup.students = students;
+            return this;
+        }
+
+        public Group build() {
+            return newGroup;
+        }
     }
 
     public Integer getId() {
@@ -53,5 +71,14 @@ public class Group {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, students);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", students=" + students +
+               '}';
     }
 }
