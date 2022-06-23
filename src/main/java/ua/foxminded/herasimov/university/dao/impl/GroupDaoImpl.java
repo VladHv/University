@@ -24,8 +24,8 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public void create(Group entity) {
-        jdbcTemplate.update("INSERT INTO groups (name) VALUES (?)", entity.getName());
+    public int create(Group entity) {
+        return jdbcTemplate.update("INSERT INTO groups (name) VALUES (?)", entity.getName());
     }
 
     @Override
@@ -34,18 +34,18 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public void update(Group entity) {
-        jdbcTemplate.update("UPDATE groups SET name = (?) WHERE id = (?)", entity.getName(), entity.getId());
+    public int update(Group entity) {
+        return jdbcTemplate.update("UPDATE groups SET name = (?) WHERE id = (?)", entity.getName(), entity.getId());
     }
 
     @Override
-    public void delete(Integer id) {
-        jdbcTemplate.update("DELETE FROM groups WHERE id = (?)", id);
+    public int delete(Integer id) {
+        return jdbcTemplate.update("DELETE FROM groups WHERE id = (?)", id);
     }
 
     @Override
-    public void delete(Group entity) {
-        jdbcTemplate.update("DELETE FROM groups WHERE id = (?)", entity.getId());
+    public int delete(Group entity) {
+        return jdbcTemplate.update("DELETE FROM groups WHERE id = (?)", entity.getId());
     }
 
     @Override

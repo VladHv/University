@@ -19,8 +19,8 @@ public class LessonDaoImpl implements LessonDao {
     }
 
     @Override
-    public void create(Lesson entity) {
-        jdbcTemplate.update("INSERT INTO lessons (name, classroom) VALUES (?, ?)",
+    public int create(Lesson entity) {
+        return jdbcTemplate.update("INSERT INTO lessons (name, classroom) VALUES (?, ?)",
                             entity.getName(),
                             entity.getClassroom());
     }
@@ -31,21 +31,21 @@ public class LessonDaoImpl implements LessonDao {
     }
 
     @Override
-    public void update(Lesson entity) {
-        jdbcTemplate.update("UPDATE lessons SET name = (?), classroom = (?) WHERE id = (?)",
+    public int update(Lesson entity) {
+        return jdbcTemplate.update("UPDATE lessons SET name = (?), classroom = (?) WHERE id = (?)",
                             entity.getName(),
                             entity.getClassroom(),
                             entity.getId());
     }
 
     @Override
-    public void delete(Integer id) {
-        jdbcTemplate.update("DELETE FROM lessons WHERE id = (?)", id);
+    public int delete(Integer id) {
+        return jdbcTemplate.update("DELETE FROM lessons WHERE id = (?)", id);
     }
 
     @Override
-    public void delete(Lesson entity) {
-        jdbcTemplate.update("DELETE FROM lessons WHERE id = (?)", entity.getId());
+    public int delete(Lesson entity) {
+        return jdbcTemplate.update("DELETE FROM lessons WHERE id = (?)", entity.getId());
     }
 
     @Override

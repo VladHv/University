@@ -19,8 +19,8 @@ public class TimetableDaoImpl implements TimetableDao {
     }
 
     @Override
-    public void create(Timetable entity) {
-        jdbcTemplate.update(
+    public int create(Timetable entity) {
+        return jdbcTemplate.update(
             "INSERT INTO timetables (lesson_id, teacher_id, group_id, day, time) VALUES (?, ?, ?, ?, ?)",
             entity.getLessonId(),
             entity.getTeacherId(),
@@ -35,8 +35,8 @@ public class TimetableDaoImpl implements TimetableDao {
     }
 
     @Override
-    public void update(Timetable entity) {
-        jdbcTemplate.update(
+    public int update(Timetable entity) {
+        return jdbcTemplate.update(
             "UPDATE timetables SET lesson_id = (?), teacher_id = (?), group_id = (?), day = (?), time = (?) WHERE id = (?)",
             entity.getLessonId(),
             entity.getTeacherId(),
@@ -47,13 +47,13 @@ public class TimetableDaoImpl implements TimetableDao {
     }
 
     @Override
-    public void delete(Integer id) {
-        jdbcTemplate.update("DELETE FROM timetables WHERE id = (?)", id);
+    public int delete(Integer id) {
+        return jdbcTemplate.update("DELETE FROM timetables WHERE id = (?)", id);
     }
 
     @Override
-    public void delete(Timetable entity) {
-        jdbcTemplate.update("DELETE FROM timetables WHERE id = (?)", entity.getId());
+    public int delete(Timetable entity) {
+        return jdbcTemplate.update("DELETE FROM timetables WHERE id = (?)", entity.getId());
     }
 
     @Override

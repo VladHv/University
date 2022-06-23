@@ -19,8 +19,8 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void create(Student entity) {
-        jdbcTemplate.update("INSERT INTO students (first_name, last_name, faculty, ticket) VALUES (?, ?, ?, ?)",
+    public int create(Student entity) {
+        return jdbcTemplate.update("INSERT INTO students (first_name, last_name, faculty, ticket) VALUES (?, ?, ?, ?)",
                             entity.getFirstName(),
                             entity.getLastName(),
                             entity.getFaculty(),
@@ -33,8 +33,9 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void update(Student entity) {
-        jdbcTemplate.update("UPDATE students SET first_name = (?), last_name = (?), faculty = (?), ticket = (?) WHERE" +
+    public int update(Student entity) {
+        return jdbcTemplate.update("UPDATE students SET first_name = (?), last_name = (?), faculty = (?), ticket = (?) " +
+                             "WHERE" +
                             " id = (?)",
                             entity.getFirstName(),
                             entity.getLastName(),
@@ -44,13 +45,13 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void delete(Integer id) {
-        jdbcTemplate.update("DELETE FROM students WHERE id = (?)", id);
+    public int delete(Integer id) {
+        return jdbcTemplate.update("DELETE FROM students WHERE id = (?)", id);
     }
 
     @Override
-    public void delete(Student entity) {
-        jdbcTemplate.update("DELETE FROM students WHERE id = (?)", entity.getId());
+    public int delete(Student entity) {
+        return jdbcTemplate.update("DELETE FROM students WHERE id = (?)", entity.getId());
     }
 
     @Override

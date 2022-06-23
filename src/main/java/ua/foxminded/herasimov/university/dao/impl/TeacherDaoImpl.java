@@ -19,8 +19,8 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void create(Teacher entity) {
-        jdbcTemplate.update("INSERT INTO teachers (first_name, last_name, department, position) VALUES (?, ?, ?, ?)",
+    public int create(Teacher entity) {
+        return jdbcTemplate.update("INSERT INTO teachers (first_name, last_name, department, position) VALUES (?, ?, ?, ?)",
                             entity.getFirstName(),
                             entity.getLastName(),
                             entity.getDepartment(),
@@ -33,8 +33,8 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void update(Teacher entity) {
-        jdbcTemplate.update(
+    public int update(Teacher entity) {
+        return jdbcTemplate.update(
             "UPDATE teachers SET first_name = (?), last_name = (?), department = (?), position = (?) WHERE" +
             " id = (?)",
             entity.getFirstName(),
@@ -45,13 +45,13 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public void delete(Integer id) {
-        jdbcTemplate.update("DELETE FROM teachers WHERE id = (?)", id);
+    public int delete(Integer id) {
+        return jdbcTemplate.update("DELETE FROM teachers WHERE id = (?)", id);
     }
 
     @Override
-    public void delete(Teacher entity) {
-        jdbcTemplate.update("DELETE FROM teachers WHERE id = (?)", entity.getId());
+    public int delete(Teacher entity) {
+        return jdbcTemplate.update("DELETE FROM teachers WHERE id = (?)", entity.getId());
     }
 
     @Override
