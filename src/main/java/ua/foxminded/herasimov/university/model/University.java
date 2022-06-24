@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.herasimov.university.entity.Group;
 import ua.foxminded.herasimov.university.entity.Timetable;
-import ua.foxminded.herasimov.university.service.GroupService;
-import ua.foxminded.herasimov.university.service.TimetableService;
+import ua.foxminded.herasimov.university.service.impl.GroupServiceImpl;
+import ua.foxminded.herasimov.university.service.impl.TimetableServiceImpl;
 
 import java.time.DayOfWeek;
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 @Component
 public class University {
 
-    private TimetableService timetableService;
-    private GroupService groupService;
+    private TimetableServiceImpl timetableService;
+    private GroupServiceImpl groupService;
 
     @Autowired
-    public University(TimetableService timetableService,
-                      GroupService groupService) {
+    public University(TimetableServiceImpl timetableService,
+                      GroupServiceImpl groupService) {
         this.timetableService = timetableService;
         this.groupService = groupService;
     }
