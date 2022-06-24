@@ -1,65 +1,58 @@
 package ua.foxminded.herasimov.university.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ua.foxminded.herasimov.university.entity.Group;
+import ua.foxminded.herasimov.university.entity.Timetable;
+import ua.foxminded.herasimov.university.service.impl.GroupServiceImpl;
+import ua.foxminded.herasimov.university.service.impl.TimetableServiceImpl;
+
 import java.time.DayOfWeek;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Component
 public class University {
-    private List<Timetable> monthTimetables;
 
-    public University(List<Timetable> monthTimetables) {
-        this.monthTimetables = monthTimetables;
-    }
+    private TimetableServiceImpl timetableService;
+    private GroupServiceImpl groupService;
 
-    public University() {
+    @Autowired
+    public University(TimetableServiceImpl timetableService,
+                      GroupServiceImpl groupService) {
+        this.timetableService = timetableService;
+        this.groupService = groupService;
     }
 
     public List<Timetable> getTeacherTimetableForDay(Integer teacherId, DayOfWeek day) {
-        return monthTimetables.stream()
-                              .filter(t -> t.getTeacher().getId().equals(teacherId))
-                              .filter(t -> t.getDay().equals(day))
-                              .collect(Collectors.toList());
+        List<Timetable> monthTimetable = timetableService.findAll();
+        return monthTimetable.stream()
+                             .filter(t -> t.getTeacherId().equals(teacherId))
+                             .filter(t -> t.getDay().equals(day.getValue()))
+                             .collect(Collectors.toList());
     }
 
     public List<Timetable> getTeacherTimetableForMonth(Integer teacherId) {
-        return monthTimetables.stream()
-                              .filter(t -> t.getTeacher().getId().equals(teacherId))
-                              .collect(Collectors.toList());
+        List<Timetable> monthTimetable = timetableService.findAll();
+        return monthTimetable.stream()
+                             .filter(t -> t.getTeacherId().equals(teacherId))
+                             .collect(Collectors.toList());
     }
 
     public List<Timetable> getStudentTimetableForDay(Integer studentId, DayOfWeek day) {
-        return monthTimetables.stream()
-                       .filter(t -> t.getStudentIds().contains(studentId))
-                       .filter(t -> t.getDay().equals(day))
-                       .collect(Collectors.toList());
+        List<Timetable> monthTimetable = timetableService.findAll();
+        Group group = groupService.getGroupByStudentId(studentId);
+        return monthTimetable.stream()
+                             .filter(t -> t.getGroupId().equals(group.getId()))
+                             .filter(t -> t.getDay().equals(day.getValue()))
+                             .collect(Collectors.toList());
     }
 
     public List<Timetable> getStudentTimetableForMonth(Integer studentId) {
-        return monthTimetables.stream()
-                              .filter(t -> t.getStudentIds().contains(studentId))
-                              .collect(Collectors.toList());
-    }
-
-
-    public List<Timetable> getMonthTimetables() {
-        return monthTimetables;
-    }
-
-    public void setMonthTimetables(List<Timetable> monthTimetables) {
-        this.monthTimetables = monthTimetables;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        University that = (University) o;
-        return Objects.equals(monthTimetables, that.monthTimetables);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(monthTimetables);
+        List<Timetable> monthTimetable = timetableService.findAll();
+        Group group = groupService.getGroupByStudentId(studentId);
+        return monthTimetable.stream()
+                             .filter(t -> t.getGroupId().equals(group.getId()))
+                             .collect(Collectors.toList());
     }
 }

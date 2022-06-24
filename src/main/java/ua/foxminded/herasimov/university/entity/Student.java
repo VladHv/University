@@ -2,17 +2,34 @@ package ua.foxminded.herasimov.university.entity;
 
 import java.util.Objects;
 
-public class Student extends Person{
+public class Student extends Person {
     private String faculty;
     private Integer ticket;
 
-    public Student(Integer id, String firstName, String lastName, String faculty, Integer ticket) {
-        super(id, firstName, lastName);
-        this.faculty = faculty;
-        this.ticket = ticket;
+    protected Student() {
     }
 
-    public Student() {
+    public static final class Builder extends Person.ABuilder<Student, Builder> {
+
+        @Override
+        protected Student getObject() {
+            return new Student();
+        }
+
+        @Override
+        protected Builder thisObject() {
+            return this;
+        }
+
+        public Builder withFaculty(String faculty) {
+            object.faculty = faculty;
+            return this;
+        }
+
+        public Builder withTicket(Integer ticket) {
+            object.ticket = ticket;
+            return this;
+        }
     }
 
     public String getFaculty() {

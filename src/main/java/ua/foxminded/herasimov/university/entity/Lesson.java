@@ -3,15 +3,44 @@ package ua.foxminded.herasimov.university.entity;
 import java.util.Objects;
 
 public class Lesson {
+
+    private Integer id;
     private String name;
     private Integer classroom;
 
-    public Lesson(String name, Integer classroom) {
-        this.name = name;
-        this.classroom = classroom;
+    public static class Builder {
+        private Lesson newLesson;
+
+        public Builder() {
+            newLesson = new Lesson();
+        }
+
+        public Builder withId(Integer id) {
+            newLesson.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            newLesson.name = name;
+            return this;
+        }
+
+        public Builder withClassroom(Integer classroom) {
+            newLesson.classroom = classroom;
+            return this;
+        }
+
+        public Lesson build() {
+            return newLesson;
+        }
     }
 
-    public Lesson() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -3,18 +3,45 @@ package ua.foxminded.herasimov.university.entity;
 import java.util.Objects;
 
 public abstract class Person {
-    private Integer id;
-    private String firstName;
-    private String lastName;
+    protected Integer id;
+    protected String firstName;
+    protected String lastName;
 
-    protected Person(Integer id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    protected Person() {
     }
 
-    protected  Person(){
+    protected abstract static class ABuilder<T extends Person, B extends ABuilder<T, B>> {
+        protected T object;
+        protected B thisObject;
 
+        protected abstract T getObject();
+
+        protected abstract B thisObject();
+
+        protected ABuilder() {
+            object = getObject();
+            thisObject = thisObject();
+        }
+
+        public B withId(Integer id) {
+            object.id = id;
+            return thisObject;
+        }
+
+        public B withFirstName(String firstName) {
+            object.firstName = firstName;
+            return thisObject;
+        }
+
+
+        public B withLastName(String lastName) {
+            object.lastName = lastName;
+            return thisObject;
+        }
+
+        public T build() {
+            return object;
+        }
     }
 
     public Integer getId() {
