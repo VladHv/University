@@ -25,7 +25,7 @@ public class University {
     }
 
     public List<Timetable> getTeacherTimetableForDay(Integer teacherId, DayOfWeek day) {
-        List<Timetable> monthTimetable = timetableService.findAll();
+        List<Timetable> monthTimetable = timetableService.findAll().get();
         return monthTimetable.stream()
                              .filter(t -> t.getTeacherId().equals(teacherId))
                              .filter(t -> t.getDay().equals(day.getValue()))
@@ -33,15 +33,15 @@ public class University {
     }
 
     public List<Timetable> getTeacherTimetableForMonth(Integer teacherId) {
-        List<Timetable> monthTimetable = timetableService.findAll();
+        List<Timetable> monthTimetable = timetableService.findAll().get();
         return monthTimetable.stream()
                              .filter(t -> t.getTeacherId().equals(teacherId))
                              .collect(Collectors.toList());
     }
 
     public List<Timetable> getStudentTimetableForDay(Integer studentId, DayOfWeek day) {
-        List<Timetable> monthTimetable = timetableService.findAll();
-        Group group = groupService.getGroupByStudentId(studentId);
+        List<Timetable> monthTimetable = timetableService.findAll().get();
+        Group group = groupService.getGroupByStudentId(studentId).get();
         return monthTimetable.stream()
                              .filter(t -> t.getGroupId().equals(group.getId()))
                              .filter(t -> t.getDay().equals(day.getValue()))
@@ -49,8 +49,8 @@ public class University {
     }
 
     public List<Timetable> getStudentTimetableForMonth(Integer studentId) {
-        List<Timetable> monthTimetable = timetableService.findAll();
-        Group group = groupService.getGroupByStudentId(studentId);
+        List<Timetable> monthTimetable = timetableService.findAll().get();
+        Group group = groupService.getGroupByStudentId(studentId).get();
         return monthTimetable.stream()
                              .filter(t -> t.getGroupId().equals(group.getId()))
                              .collect(Collectors.toList());
