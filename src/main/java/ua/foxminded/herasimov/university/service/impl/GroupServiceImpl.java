@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
 import ua.foxminded.herasimov.university.entity.Group;
 import ua.foxminded.herasimov.university.service.GroupService;
-import ua.foxminded.herasimov.university.service.ServiceException;
+import ua.foxminded.herasimov.university.exception.ServiceException;
 
 import java.util.List;
 import java.util.Optional;

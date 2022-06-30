@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.herasimov.university.dao.impl.StudentDaoImpl;
 import ua.foxminded.herasimov.university.entity.Student;
-import ua.foxminded.herasimov.university.service.ServiceException;
+import ua.foxminded.herasimov.university.exception.ServiceException;
 import ua.foxminded.herasimov.university.service.StudentService;
 
 import java.util.List;

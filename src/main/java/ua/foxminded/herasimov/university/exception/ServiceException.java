@@ -1,4 +1,4 @@
-package ua.foxminded.herasimov.university.service;
+package ua.foxminded.herasimov.university.exception;
 
 public class ServiceException extends RuntimeException {
 

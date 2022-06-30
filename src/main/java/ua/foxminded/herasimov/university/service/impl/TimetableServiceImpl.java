@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.herasimov.university.dao.impl.TimetableDaoImpl;
 import ua.foxminded.herasimov.university.entity.Timetable;
-import ua.foxminded.herasimov.university.service.ServiceException;
+import ua.foxminded.herasimov.university.exception.ServiceException;
 import ua.foxminded.herasimov.university.service.TimetableService;
 
 import java.util.List;
