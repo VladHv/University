@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("ua.foxminded.herasimov.university")
-@PropertySource("classpath:jdbc.properties")
+@PropertySource("classpath:application.properties")
 public class SpringConfig {
 
     @Value("${spring.datasource.driver}")

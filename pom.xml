@@ -14,7 +14,7 @@
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <mockito.version>4.3.1</mockito.version>
         <postgresql.version>42.3.1</postgresql.version>
-        <spring.jbdc.version>2.7.0</spring.jbdc.version>
+        <spring.version>2.7.1</spring.version>
         <logback.version>1.2.11</logback.version>
         <slf4j.version>1.7.36</slf4j.version>
     </properties>
@@ -43,7 +43,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>${spring.jbdc.version}</version>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -65,17 +77,5 @@
             <version>${logback.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
