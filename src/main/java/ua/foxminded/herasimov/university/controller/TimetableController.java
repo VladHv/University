@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.foxminded.herasimov.university.dto.TimetableDto;
-import ua.foxminded.herasimov.university.dto.TimetableDtoMapper;
+import ua.foxminded.herasimov.university.entity.TimetableDto;
+import ua.foxminded.herasimov.university.entity.TimetableDtoMapper;
 import ua.foxminded.herasimov.university.entity.Timetable;
 import ua.foxminded.herasimov.university.service.impl.TimetableServiceImpl;
 

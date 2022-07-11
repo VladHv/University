@@ -1,11 +1,10 @@
-package ua.foxminded.herasimov.university.dto;
+package ua.foxminded.herasimov.university.entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
 import ua.foxminded.herasimov.university.dao.impl.LessonDaoImpl;
 import ua.foxminded.herasimov.university.dao.impl.TeacherDaoImpl;
-import ua.foxminded.herasimov.university.entity.Timetable;
 
 import java.time.DayOfWeek;
 

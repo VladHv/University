@@ -1,8 +1,4 @@
-package ua.foxminded.herasimov.university.dto;
-
-import ua.foxminded.herasimov.university.entity.Group;
-import ua.foxminded.herasimov.university.entity.Lesson;
-import ua.foxminded.herasimov.university.entity.Teacher;
+package ua.foxminded.herasimov.university.entity;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
