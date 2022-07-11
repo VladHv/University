@@ -42,13 +42,6 @@
             <div class="card">
                 <h5 class="card-header" th:text="'Timetable #' + ${timetable.id}">Timetable number</h5>
                 <div class="card-body text-success">
-<!--                    <div th:switch="${timetable.day}">-->
-<!--                        <p class="card-text" th:case="1" th:text="Monday">Day</p>-->
-<!--                        <p class="card-text" th:case="2" th:text="Tuesday">Day</p>-->
-<!--                        <p class="card-text" th:case="3" th:text="Wednesday">Day</p>-->
-<!--                        <p class="card-text" th:case="4" th:text="Thursday">Day</p>-->
-<!--                        <p class="card-text" th:case="5" th:text="Friday">Day</p>-->
-<!--                    </div>-->
                     <p class="card-text" th:text="'Lesson: ' + ${timetable.lesson.name}">Lesson</p>
                     <p class="card-text" th:text="'Classroom: ' + ${timetable.lesson.classroom}">Classroom</p>
                     <p class="card-text" th:text="'Teacher: ' + ${timetable.teacher.firstName} + ' ' + ${timetable.teacher.lastName}">Teacher</p>

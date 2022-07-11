@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Student page</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" style="color: coral" href="/">University</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: coral" href="/timetables/">Timetables</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: coral" href="/students/">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: coral" href="/teachers/">Teachers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: coral" href="/groups/">Groups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: coral" href="/lessons/">Lessons</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<form class="row w-25 p-5 mx-auto" th:action="@{/students/{id} (id=${student.id})}" th:object="${student}" th:method="POST">
+
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+            <label for="id" class="col-form-label">Student#</label>
+        </div>
+        <div class="col-auto">
+            <input readonly type="text" class="form-control-plaintext" id="id" placeholder="Id"
+                   th:field="*{id}">
+        </div>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="firstName" placeholder="First Name"
+               th:field="*{firstName}" disabled>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+               th:field="*{lastName}" disabled>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="faculty" placeholder="Faculty" th:field="*{faculty}" disabled>
+    </div>
+    <div class="mb-3">
+        <input type="number" class="form-control" id="ticket" placeholder="Ticket" th:field="*{ticket}" disabled>
+    </div>
+    <div class="form-group">
+        <div class="col-12 text-center">
+            <button type="edit" class="btn btn-warning" id="edit" onclick="return handleEdit()">Edit</button>
+
+            <button type="submit" class="btn btn-success" id="save" hidden>Save</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    function handleEdit() {
+        document.getElementById('firstName').disabled = false;
+        document.getElementById('lastName').disabled = false;
+        document.getElementById('faculty').disabled = false;
+        document.getElementById('ticket').disabled = false;
+        document.getElementById('edit').hidden = true;
+        document.getElementById('save').hidden = false;
+        return false;
+    }
+</script>
+
+</body>
+</html>
