@@ -71,4 +71,13 @@ public class Lesson {
     public int hashCode() {
         return Objects.hash(name, classroom);
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", classroom=" + classroom +
+               '}';
+    }
 }

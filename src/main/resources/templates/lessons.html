@@ -36,12 +36,36 @@
     </div>
 </nav>
 
-<table class="table table-secondary table-striped" style="margin-top: 10px; width:70%; margin-left:15%; margin-right:15%">
+<div class="d-grid gap-2 col-2 mx-auto my-3">
+    <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Create new lesson
+    </a>
+    <form th:action="@{/lessons/}" th:object="${lesson}" th:method="POST">
+        <div class="collapse my-3" id="collapseExample">
+            <div class="card card-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="classroom" placeholder="Classroom"
+                           th:field="*{classroom}">
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+    </form>
+</div>
+
+<table class="table table-secondary table-striped"
+       style="margin-top: 10px; width:70%; margin-left:15%; margin-right:15%">
     <thead>
     <tr class="table-dark">
         <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">Classroom</th>
+        <th scope="col"></th>
 
     </tr>
     </thead>
@@ -50,6 +74,12 @@
         <td th:text="${lesson.id}">ID</td>
         <td th:text="${lesson.name}">Name</td>
         <td th:text="${lesson.classroom}">Classroom</td>
+        <td>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <a type="button" class="btn btn-primary" th:href="@{{id} (id=${lesson.id})}">Show</a>
+                <a type="button" class="btn btn-danger" th:href="@{delete/{id} (id=${lesson.id})}">Delete</a>
+            </div>
+        </td>
     </tr>
     </tbody>
 </table>

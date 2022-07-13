@@ -61,4 +61,15 @@ public class Teacher extends Person {
     public int hashCode() {
         return Objects.hash(super.hashCode(), department, position);
     }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+               "id=" + id +
+               ", firstName='" + firstName + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", department='" + department + '\'' +
+               ", position=" + position +
+               '}';
+    }
 }

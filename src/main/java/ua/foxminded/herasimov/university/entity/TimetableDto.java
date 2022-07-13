@@ -2,6 +2,7 @@ package ua.foxminded.herasimov.university.entity;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class TimetableDto {
 
@@ -100,5 +101,32 @@ public class TimetableDto {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TimetableDto that = (TimetableDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(lesson, that.lesson) &&
+               Objects.equals(teacher, that.teacher) && Objects.equals(group, that.group) &&
+               day == that.day && Objects.equals(time, that.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lesson, teacher, group, day, time);
+    }
+
+    @Override
+    public String toString() {
+        return "TimetableDto{" +
+               "id=" + id +
+               ", lesson=" + lesson +
+               ", teacher=" + teacher +
+               ", group=" + group +
+               ", day=" + day +
+               ", time=" + time +
+               '}';
     }
 }

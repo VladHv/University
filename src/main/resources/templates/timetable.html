@@ -36,6 +36,50 @@
     </div>
 </nav>
 
+<div class="d-grid gap-2 col-2 mx-auto my-3">
+    <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Add new to timetable
+    </a>
+    <form th:action="@{/timetables/}" th:object="${timetable}" th:method="POST">
+        <div class="collapse my-3" id="collapseExample">
+            <div class="card card-body">
+                <div class="mb-3">
+                    <label for="lesson" class="form-label">Lesson</label>
+                    <select id="lesson" class="form-select" th:field="*{lessonId}">
+                        <option th:each="lesson: ${lessonsList}" th:value="${lesson.id}" th:text="${lesson.name} + ', ' + ${lesson.classroom}" ></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="teacher" class="form-label">Teacher</label>
+                    <select id="teacher" class="form-select" th:field="*{teacherId}">
+                        <option th:each="teacher: ${teachersList}" th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName} + ', ' + ${teacher.position}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="group" class="form-label">Group</label>
+                    <select id="group" class="form-select" th:field="*{groupId}">
+                        <option th:each="group: ${groupsList}" th:value="${group.id}" th:text="${group.name}" ></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="day" class="form-label">Day</label>
+                    <select id="day" class="form-select" th:field="*{day}">
+                        <option th:each="day: ${daysOfWeek}" th:value="${day.getValue()}" th:text="${day}" ></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="time" class="form-label">Time</label>
+                    <input type="time" class="form-control" id="time" placeholder="time" th:field="*{time}">
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" th:each="timetable: ${timetables}">
         <div class="card border-success mb-3" style="max-width: 18rem; margin-top: 50px; margin-left: 50px">
@@ -48,6 +92,10 @@
                     <p class="card-text" th:text="'Group: ' + ${timetable.group.name}">Group</p>
                     <p class="card-text" th:text="'Day: ' + ${timetable.day}">Day</p>
                     <p class="card-text" th:text="'Time: ' + ${timetable.time}">Time</p>
+                    <div class="btn-group mx-5" role="group" aria-label="Basic mixed styles example">
+                        <a type="button" class="btn btn-primary" th:href="@{{id} (id=${timetable.id})}">Show</a>
+                        <a type="button" class="btn btn-danger" th:href="@{delete/{id} (id=${timetable.id})}">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
