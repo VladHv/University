@@ -3,6 +3,7 @@ package ua.foxminded.herasimov.university.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import ua.foxminded.herasimov.university.dao.impl.StudentDaoImpl;
 import ua.foxminded.herasimov.university.entity.Student;
@@ -27,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Starting create: {}", student);
         try {
             return dao.create(student);
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             logger.error("Student {} cannot be found", student);
             throw new ServiceException("Not created: " + student.toString(), e);
         }
@@ -37,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Finding student by id: {}", id);
         try {
             return Optional.ofNullable(dao.findById(id));
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             logger.error("Student with id '{}' cannot be found", id);
             throw new ServiceException("Student not found by id: " + id, e);
         }
@@ -47,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Updating student {}", student);
         try {
             return dao.update(student);
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             logger.error("Student {} cannot be updated", student);
             throw new ServiceException("Not updated: " + student, e);
         }
@@ -57,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Deleting student by id: {}", id);
         try {
             return dao.delete(id);
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             logger.error("Student with id '{}' cannot be deleted", id);
             throw new ServiceException("Student by id: " + id + " not deleted", e);
         }
@@ -67,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Deleting student: {}", student);
         try {
             return dao.delete(student);
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             logger.error("Student {} cannot be deleted", student);
             throw new ServiceException("Not deleted: " + student, e);
         }
@@ -77,7 +78,7 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Staring to find all students");
         try {
             return Optional.ofNullable(dao.findAll());
-        } catch (RuntimeException e) {
+        } catch (DataAccessException e) {
             logger.info("All students not found");
             throw new ServiceException("All students not found", e);
         }
