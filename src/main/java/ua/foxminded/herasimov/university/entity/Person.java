@@ -1,10 +1,20 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.Objects;
 
+@MappedSuperclass
 public abstract class Person {
+
+    @Id
     protected Integer id;
+
+    @Column
     protected String firstName;
+
+    @Column
     protected String lastName;
 
     protected Person() {

@@ -1,9 +1,17 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "teachers")
 public class Teacher extends Person {
+
+    @Column(name = "department")
     private String department;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "position")
     private TeacherPosition position;
 
     protected Teacher() {

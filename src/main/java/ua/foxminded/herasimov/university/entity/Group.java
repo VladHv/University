@@ -1,12 +1,23 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "groups")
 public class Group {
+
+    @Id
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name")
     private String name;
-    private List<Student> students;
+
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    private Set<Student> students;
 
     public static class Builder {
         private Group newGroup;
@@ -25,7 +36,7 @@ public class Group {
             return this;
         }
 
-        public Builder withStudents(List<Student> students) {
+        public Builder withStudents(Set<Student> students) {
             newGroup.students = students;
             return this;
         }
@@ -51,11 +62,11 @@ public class Group {
         this.name = name;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 
@@ -64,13 +75,12 @@ public class Group {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
-        return Objects.equals(id, group.id) && Objects.equals(name, group.name) &&
-               Objects.equals(students, group.students);
+        return Objects.equals(id, group.id) && Objects.equals(name, group.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, students);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -78,7 +88,6 @@ public class Group {
         return "Group{" +
                "id=" + id +
                ", name='" + name + '\'' +
-               ", students=" + students +
                '}';
     }
 }

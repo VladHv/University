@@ -1,11 +1,23 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "lessons")
 public class Lesson {
 
+    @Id
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "classroom")
     private Integer classroom;
 
     public static class Builder {
