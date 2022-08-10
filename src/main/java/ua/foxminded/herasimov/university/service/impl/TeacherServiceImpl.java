@@ -24,10 +24,10 @@ public class TeacherServiceImpl implements TeacherService {
         this.dao = dao;
     }
 
-    public int create(Teacher teacher) {
+    public void create(Teacher teacher) {
         logger.info("Starting create: {}", teacher);
         try {
-            return dao.create(teacher);
+            dao.create(teacher);
         } catch (DataAccessException e) {
             logger.error("Teacher {} cannot be found", teacher);
             throw new ServiceException("Not created: " + teacher.toString(), e);
@@ -44,30 +44,30 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-    public int update(Teacher teacher) {
+    public void update(Teacher teacher) {
         logger.info("Updating teacher {}", teacher);
         try {
-            return dao.update(teacher);
+            dao.update(teacher);
         } catch (DataAccessException e) {
             logger.error("Teacher {} cannot be updated", teacher);
             throw new ServiceException("Not updated: " + teacher, e);
         }
     }
 
-    public int delete(Teacher teacher) {
+    public void delete(Teacher teacher) {
         logger.info("Deleting teacher: {}", teacher);
         try {
-            return dao.delete(teacher);
+            dao.delete(teacher);
         } catch (DataAccessException e) {
             logger.error("Teacher {} cannot be deleted", teacher);
             throw new ServiceException("Not deleted: " + teacher, e);
         }
     }
 
-    public int delete(Integer id) {
+    public void delete(Integer id) {
         logger.info("Deleting teacher by id: {}", id);
         try {
-            return dao.delete(id);
+            dao.delete(id);
         } catch (DataAccessException e) {
             logger.error("Teacher with id '{}' cannot be deleted", id);
             throw new ServiceException("Teacher by id: " + id + " not deleted", e);

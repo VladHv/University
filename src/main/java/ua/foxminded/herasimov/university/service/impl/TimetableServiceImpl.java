@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
 import ua.foxminded.herasimov.university.dao.impl.TimetableDaoImpl;
 import ua.foxminded.herasimov.university.entity.Timetable;
 import ua.foxminded.herasimov.university.exception.ServiceException;
@@ -24,10 +23,10 @@ public class TimetableServiceImpl implements TimetableService {
         this.timetableDao = timetableDao;
     }
 
-    public int create(Timetable timetable) {
+    public void create(Timetable timetable) {
         logger.info("Starting create: {}", timetable);
         try {
-            return timetableDao.create(timetable);
+            timetableDao.create(timetable);
         } catch (DataAccessException e) {
             logger.error("Timetable {} cannot be found", timetable);
             throw new ServiceException("Not created: " + timetable.toString(), e);
@@ -44,30 +43,30 @@ public class TimetableServiceImpl implements TimetableService {
         }
     }
 
-    public int update(Timetable timetable) {
+    public void update(Timetable timetable) {
         logger.info("Updating timetable {}", timetable);
         try {
-            return timetableDao.update(timetable);
+            timetableDao.update(timetable);
         } catch (DataAccessException e) {
             logger.error("Timetable {} cannot be updated", timetable);
             throw new ServiceException("Not updated: " + timetable, e);
         }
     }
 
-    public int delete(Integer id) {
+    public void delete(Integer id) {
         logger.info("Deleting timetable by id: {}", id);
         try {
-            return timetableDao.delete(id);
+            timetableDao.delete(id);
         } catch (DataAccessException e) {
             logger.error("Timetable with id '{}' cannot be deleted", id);
             throw new ServiceException("Timetable by id: " + id + " not deleted", e);
         }
     }
 
-    public int delete(Timetable timetable) {
+    public void delete(Timetable timetable) {
         logger.info("Deleting timetable: {}", timetable);
         try {
-            return timetableDao.delete(timetable);
+            timetableDao.delete(timetable);
         } catch (DataAccessException e) {
             logger.error("Timetable {} cannot be deleted", timetable);
             throw new ServiceException("Not deleted: " + timetable, e);

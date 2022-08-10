@@ -68,7 +68,7 @@ public class SpringConfig implements WebMvcConfigurer {
     public LocalSessionFactoryBean sessionFactory() throws NamingException {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ua.foxminded.herasimov.university.entity");
+        sessionFactory.setPackagesToScan(new String[] {"ua.foxminded.herasimov.university.entity"});
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
@@ -82,7 +82,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return transactionManager;
     }
 
-    private final Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
             "hibernate.hbm2ddl.auto", "create");

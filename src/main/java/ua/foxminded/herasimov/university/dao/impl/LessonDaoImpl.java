@@ -1,55 +1,58 @@
 package ua.foxminded.herasimov.university.dao.impl;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.herasimov.university.dao.LessonDao;
-import ua.foxminded.herasimov.university.dao.mapper.LessonMapper;
 import ua.foxminded.herasimov.university.entity.Lesson;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
 public class LessonDaoImpl implements LessonDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private SessionFactory sessionFactory;
 
-    public LessonDaoImpl(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    @Autowired
+    public LessonDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public int create(Lesson entity) {
-        return jdbcTemplate.update("INSERT INTO lessons (name, classroom) VALUES (?, ?)",
-                            entity.getName(),
-                            entity.getClassroom());
+    public void create(Lesson entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(entity);
     }
 
     @Override
     public Lesson findById(Integer id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM lessons WHERE id = (?)", new LessonMapper(), id);
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Lesson.class, id);
     }
 
     @Override
-    public int update(Lesson entity) {
-        return jdbcTemplate.update("UPDATE lessons SET name = (?), classroom = (?) WHERE id = (?)",
-                            entity.getName(),
-                            entity.getClassroom(),
-                            entity.getId());
+    public void update(Lesson entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(entity);
     }
 
     @Override
-    public int delete(Integer id) {
-        return jdbcTemplate.update("DELETE FROM lessons WHERE id = (?)", id);
+    public void delete(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Lesson lesson = session.get(Lesson.class, id);
+        session.remove(lesson);
     }
 
     @Override
-    public int delete(Lesson entity) {
-        return jdbcTemplate.update("DELETE FROM lessons WHERE id = (?)", entity.getId());
+    public void delete(Lesson entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(entity);
     }
 
     @Override
     public List<Lesson> findAll() {
-        return jdbcTemplate.query("SELECT * FROM lessons", new LessonMapper());
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Lesson l order by l.id").list();
     }
 }

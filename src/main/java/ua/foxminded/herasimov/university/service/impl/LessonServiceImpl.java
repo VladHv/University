@@ -24,10 +24,10 @@ public class LessonServiceImpl implements LessonService {
         this.dao = dao;
     }
 
-    public int create(Lesson lesson) {
+    public void create(Lesson lesson) {
         logger.info("Starting create: {}", lesson);
         try {
-            return dao.create(lesson);
+            dao.create(lesson);
         } catch (DataAccessException e) {
             logger.error("Lesson {} cannot be found", lesson);
             throw new ServiceException("Not created: " + lesson.toString(), e);
@@ -44,30 +44,30 @@ public class LessonServiceImpl implements LessonService {
         }
     }
 
-    public int update(Lesson lesson) {
+    public void update(Lesson lesson) {
         logger.info("Updating lesson {}", lesson);
         try {
-            return dao.update(lesson);
+            dao.update(lesson);
         } catch (DataAccessException e) {
             logger.error("Lesson {} cannot be updated", lesson);
             throw new ServiceException("Not updated: " + lesson, e);
         }
     }
 
-    public int delete(Integer id) {
+    public void delete(Integer id) {
         logger.info("Deleting lesson by id: {}", id);
         try {
-            return dao.delete(id);
+            dao.delete(id);
         } catch (DataAccessException e) {
             logger.error("Lesson with id '{}' cannot be deleted", id);
             throw new ServiceException("Lesson by id: " + id + " not deleted", e);
         }
     }
 
-    public int delete(Lesson lesson) {
+    public void delete(Lesson lesson) {
         logger.info("Deleting lesson: {}", lesson);
         try {
-            return dao.delete(lesson);
+            dao.delete(lesson);
         } catch (DataAccessException e) {
             logger.error("Lesson {} cannot be deleted", lesson);
             throw new ServiceException("Not deleted: " + lesson, e);

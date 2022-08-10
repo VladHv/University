@@ -1,63 +1,58 @@
 package ua.foxminded.herasimov.university.dao.impl;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.herasimov.university.dao.TimetableDao;
-import ua.foxminded.herasimov.university.dao.mapper.TimetableMapper;
 import ua.foxminded.herasimov.university.entity.Timetable;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
 public class TimetableDaoImpl implements TimetableDao {
 
-    private final JdbcTemplate jdbcTemplate;
+    private SessionFactory sessionFactory;
 
-    public TimetableDaoImpl(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    @Autowired
+    public TimetableDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public int create(Timetable entity) {
-        return jdbcTemplate.update(
-            "INSERT INTO timetables (lesson_id, teacher_id, group_id, day, time) VALUES (?, ?, ?, ?, ?)",
-            entity.getLessonId(),
-            entity.getTeacherId(),
-            entity.getGroupId(),
-            entity.getDay(),
-            entity.getTime());
+    public void create(Timetable entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(entity);
     }
 
     @Override
     public Timetable findById(Integer id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM timetables WHERE id = (?)", new TimetableMapper(), id);
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Timetable.class, id);
     }
 
     @Override
-    public int update(Timetable entity) {
-        return jdbcTemplate.update(
-            "UPDATE timetables SET lesson_id = (?), teacher_id = (?), group_id = (?), day = (?), time = (?) WHERE id = (?)",
-            entity.getLessonId(),
-            entity.getTeacherId(),
-            entity.getGroupId(),
-            entity.getDay(),
-            entity.getTime(),
-            entity.getId());
+    public void update(Timetable entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(entity);
     }
 
     @Override
-    public int delete(Integer id) {
-        return jdbcTemplate.update("DELETE FROM timetables WHERE id = (?)", id);
+    public void delete(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Timetable timetable = session.get(Timetable.class, id);
+        session.remove(timetable);
     }
 
     @Override
-    public int delete(Timetable entity) {
-        return jdbcTemplate.update("DELETE FROM timetables WHERE id = (?)", entity.getId());
+    public void delete(Timetable entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(entity);
     }
 
     @Override
     public List<Timetable> findAll() {
-        return jdbcTemplate.query("SELECT * FROM timetables", new TimetableMapper());
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Timetable t order by t.id").list();
     }
 }

@@ -4,15 +4,15 @@ import java.util.List;
 
 public interface Dao<K extends Number, T> {
 
-    int create(T entity);
+    void create(T entity);
 
     T findById(K id);
 
-    int update(T entity);
+    void update(T entity);
 
-    int delete(K id);
+    void delete(K id);
 
-    int delete(T entity);
+    void delete(T entity);
 
     List<T> findAll();
 }

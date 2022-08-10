@@ -37,10 +37,10 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
-    public int create(Group group) {
+    public void create(Group group) {
         logger.info("Starting create: {}", group);
         try {
-            return dao.create(group);
+            dao.create(group);
         } catch (DataAccessException e) {
             logger.error("Group {} cannot be found", group);
             throw new ServiceException("Not created: " + group.toString(), e);
@@ -57,30 +57,30 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
-    public int update(Group group) {
+    public void update(Group group) {
         logger.info("Updating group {}", group);
         try {
-            return dao.update(group);
+            dao.update(group);
         } catch (DataAccessException e) {
             logger.error("Group {} cannot be updated", group);
             throw new ServiceException("Not updated: " + group, e);
         }
     }
 
-    public int delete(Integer id) {
+    public void delete(Integer id) {
         logger.info("Deleting group by id: {}", id);
         try {
-            return dao.delete(id);
+            dao.delete(id);
         } catch (DataAccessException e) {
             logger.error("Group with id '{}' cannot be deleted", id);
             throw new ServiceException("Group by id: " + id + " not deleted", e);
         }
     }
 
-    public int delete(Group group) {
+    public void delete(Group group) {
         logger.info("Deleting group: {}", group);
         try {
-            return dao.delete(group);
+            dao.delete(group);
         } catch (DataAccessException e) {
             logger.error("Group {} cannot be deleted", group);
             throw new ServiceException("Not deleted: " + group, e);

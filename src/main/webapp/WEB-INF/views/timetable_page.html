@@ -48,26 +48,26 @@
     </div>
     <div class="mb-3">
         <label for="lesson" class="form-label">Lesson</label>
-        <select id="lesson" class="form-select" th:field="*{lessonId}" disabled>
-            <option th:each="lesson: ${lessonsList}" th:value="${lesson.id}" th:text="${lesson.name} + ', ' + ${lesson.classroom}" ></option>
+        <select id="lesson" class="form-select" th:field="*{lesson}" disabled>
+            <option th:each="lesson: ${lessonsList}" th:value="${lesson}" th:text="${lesson.name} + ', ' + ${lesson.classroom}" ></option>
         </select>
     </div>
     <div class="mb-3">
         <label for="teacher" class="form-label">Teacher</label>
-        <select id="teacher" class="form-select" th:field="*{teacherId}" disabled>
-            <option th:each="teacher: ${teachersList}" th:value="${teacher.id}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName} + ', ' + ${teacher.position}"></option>
+        <select id="teacher" class="form-select" th:field="*{teacher}" disabled>
+            <option th:each="teacher: ${teachersList}" th:value="${teacher}" th:text="${teacher.firstName} + ' ' + ${teacher.lastName} + ', ' + ${teacher.position}"></option>
         </select>
     </div>
     <div class="mb-3">
         <label for="group" class="form-label">Group</label>
-        <select id="group" class="form-select" th:field="*{groupId}" disabled>
-            <option th:each="group: ${groupsList}" th:value="${group.id}" th:text="${group.name}" ></option>
+        <select id="group" class="form-select" th:field="*{group}" disabled>
+            <option th:each="group: ${groupsList}" th:value="${group}" th:text="${group.name}" ></option>
         </select>
     </div>
     <div class="mb-3">
         <label for="day" class="form-label">Day</label>
         <select id="day" class="form-select" th:field="*{day}" disabled>
-            <option th:each="day: ${daysOfWeek}" th:value="${day.getValue()}" th:text="${day}" ></option>
+            <option th:each="day: ${daysOfWeek}" th:value="${day}" th:text="${day}" ></option>
         </select>
     </div>
     <div class="mb-3">
