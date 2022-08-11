@@ -73,7 +73,7 @@ public class SpringConfig implements WebMvcConfigurer {
     public LocalSessionFactoryBean sessionFactory() throws NamingException {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] {"ua.foxminded.herasimov.university.entity"});
+        sessionFactory.setPackagesToScan(new String[]{"ua.foxminded.herasimov.university.entity"});
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;

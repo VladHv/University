@@ -91,15 +91,6 @@
                     <p class="card-text" th:text="'Teacher: ' + ${timetable.teacher.firstName} + ' ' + ${timetable.teacher.lastName}">Teacher</p>
                     <p class="card-text" th:text="'Group: ' + ${timetable.group.name}">Group</p>
                     <p class="card-text" th:text="'Day: ' + ${timetable.day}">Group</p>
-<!--                    <div th:switch="${timetable.day}">-->
-<!--                        <p class="card-text" th:case="1" th:text="Monday">Day</p>-->
-<!--                        <p class="card-text" th:case="2" th:text="Tuesday">Day</p>-->
-<!--                        <p class="card-text" th:case="3" th:text="Wednesday">Day</p>-->
-<!--                        <p class="card-text" th:case="4" th:text="Thursday">Day</p>-->
-<!--                        <p class="card-text" th:case="5" th:text="Friday">Day</p>-->
-<!--                        <p class="card-text" th:case="6" th:text="Sunday">Day</p>-->
-<!--                        <p class="card-text" th:case="7" th:text="Saturday">Day</p>-->
-<!--                    </div>-->
                     <p class="card-text" th:text="'Time: ' + ${timetable.time}">Time</p>
                     <div class="btn-group mx-5" role="group" aria-label="Basic mixed styles example">
                         <a type="button" class="btn btn-primary" th:href="@{{id} (id=${timetable.id})}">Show</a>
