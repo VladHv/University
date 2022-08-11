@@ -28,9 +28,8 @@ public class GroupServiceImpl implements GroupService {
         logger.info("Getting group by student id: {}", id);
         try {
             logger.info("Getting group ID by student ID: {}", id);
-            Integer groupId = dao.getGroupIdByStudentId(id);
-            logger.info("Finding group by ID: {}", groupId);
-            return Optional.ofNullable(dao.findById(groupId));
+            Group group = dao.getGroupByStudentId(id);
+            return Optional.ofNullable(group);
         } catch (DataAccessException e) {
             logger.error("Group not found by Student id: {}", id);
             throw new ServiceException("Group not found by Student id - " + id, e);

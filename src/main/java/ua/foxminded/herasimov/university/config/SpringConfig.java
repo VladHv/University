@@ -75,7 +75,6 @@ public class SpringConfig implements WebMvcConfigurer {
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(new String[]{"ua.foxminded.herasimov.university.entity"});
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
 

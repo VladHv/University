@@ -21,11 +21,11 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public Integer getGroupIdByStudentId(Integer studentId) {
+    public Group getGroupByStudentId(Integer studentId) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createNativeQuery("SELECT group_id FROM students WHERE id = :id").addEntity(Group.class);
+        Query query = session.createQuery("select s.group from Student s where s.id =:id");
         query.setParameter("id", studentId);
-        return (Integer) query.getSingleResult();
+        return (Group) query.getSingleResult();
     }
 
     @Override
