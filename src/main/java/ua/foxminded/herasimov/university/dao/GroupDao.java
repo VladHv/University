@@ -4,5 +4,5 @@ import ua.foxminded.herasimov.university.entity.Group;
 
 public interface GroupDao extends Dao<Integer, Group> {
 
-    Integer getGroupIdByStudentId(Integer studentId);
+    Group getGroupByStudentId(Integer studentId);
 }
