@@ -58,6 +58,11 @@
                 <div class="mb-3">
                     <input type="number" class="form-control" id="ticket" placeholder="Ticket" th:field="*{ticket}">
                 </div>
+                <div class="mb-3">
+                    <select id="group" class="form-select" th:field="*{group}">
+                        <option th:each="group: ${groups}" th:value="${group}" th:text="${group.name}" ></option>
+                    </select>
+                </div>
                 <div class="col-12 text-center">
                     <button type="submit" class="btn btn-success">Create</button>
                 </div>

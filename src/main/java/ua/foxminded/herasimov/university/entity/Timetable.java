@@ -10,19 +10,17 @@ import java.util.Objects;
 public class Timetable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Column(name = "lesson_id")
     private Lesson lesson;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Column(name = "teacher_id")
     private Teacher teacher;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Column(name = "group_id")
     private Group group;
 
     @Enumerated(EnumType.ORDINAL)

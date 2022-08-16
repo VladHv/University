@@ -1,7 +1,6 @@
 package ua.foxminded.herasimov.university.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,6 +9,7 @@ import java.util.Set;
 public class Group {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

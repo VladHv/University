@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import ua.foxminded.herasimov.university.dao.impl.LessonDaoImpl;
+import ua.foxminded.herasimov.university.dao.LessonDao;
 import ua.foxminded.herasimov.university.entity.Lesson;
 import ua.foxminded.herasimov.university.exception.ServiceException;
 import ua.foxminded.herasimov.university.service.LessonService;
@@ -17,10 +17,10 @@ import java.util.Optional;
 public class LessonServiceImpl implements LessonService {
 
     private static final Logger logger = LoggerFactory.getLogger(LessonServiceImpl.class);
-    private LessonDaoImpl dao;
+    private LessonDao dao;
 
     @Autowired
-    public LessonServiceImpl(LessonDaoImpl dao) {
+    public LessonServiceImpl(LessonDao dao) {
         this.dao = dao;
     }
 

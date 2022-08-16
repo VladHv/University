@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
+import ua.foxminded.herasimov.university.dao.GroupDao;
 import ua.foxminded.herasimov.university.entity.Group;
 import ua.foxminded.herasimov.university.exception.ServiceException;
 import ua.foxminded.herasimov.university.service.GroupService;
@@ -17,10 +17,10 @@ import java.util.Optional;
 public class GroupServiceImpl implements GroupService {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
-    private final GroupDaoImpl dao;
+    private final GroupDao dao;
 
     @Autowired
-    public GroupServiceImpl(GroupDaoImpl dao) {
+    public GroupServiceImpl(GroupDao dao) {
         this.dao = dao;
     }
 

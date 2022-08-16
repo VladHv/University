@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.foxminded.herasimov.university.dao.StudentDao;
 import ua.foxminded.herasimov.university.entity.Student;
 
@@ -20,24 +21,28 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
+    @Transactional
     public void create(Student entity) {
         Session session = sessionFactory.getCurrentSession();
         session.save(entity);
     }
 
     @Override
+    @Transactional
     public Student findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Student.class, id);
     }
 
     @Override
+    @Transactional
     public void update(Student entity) {
         Session session = sessionFactory.getCurrentSession();
         session.update(entity);
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Student student = session.get(Student.class, id);
@@ -45,12 +50,14 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
+    @Transactional
     public void delete(Student entity) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(entity);
     }
 
     @Override
+    @Transactional
     public List<Student> findAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Student s order by s.id").list();

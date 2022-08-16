@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import ua.foxminded.herasimov.university.dao.TimetableDao;
 import ua.foxminded.herasimov.university.dao.impl.TimetableDaoImpl;
 import ua.foxminded.herasimov.university.entity.Timetable;
 import ua.foxminded.herasimov.university.exception.ServiceException;
@@ -16,10 +17,10 @@ import java.util.Optional;
 @Service
 public class TimetableServiceImpl implements TimetableService {
     private static final Logger logger = LoggerFactory.getLogger(TimetableServiceImpl.class);
-    private final TimetableDaoImpl timetableDao;
+    private final TimetableDao timetableDao;
 
     @Autowired
-    public TimetableServiceImpl(TimetableDaoImpl timetableDao) {
+    public TimetableServiceImpl(TimetableDao timetableDao) {
         this.timetableDao = timetableDao;
     }
 
