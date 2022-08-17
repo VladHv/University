@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.foxminded.herasimov.university.entity.Student;
+import ua.foxminded.herasimov.university.dto.impl.StudentDto;
+import ua.foxminded.herasimov.university.dto.impl.StudentDtoMapper;
 import ua.foxminded.herasimov.university.service.impl.GroupServiceImpl;
 import ua.foxminded.herasimov.university.service.impl.StudentServiceImpl;
 
@@ -14,25 +15,28 @@ public class StudentController {
 
     private StudentServiceImpl studentService;
     private GroupServiceImpl groupService;
+    private StudentDtoMapper dtoMapper;
 
     @Autowired
     public StudentController(StudentServiceImpl studentService,
-                             GroupServiceImpl groupService) {
+                             GroupServiceImpl groupService,
+                             StudentDtoMapper dtoMapper) {
         this.studentService = studentService;
         this.groupService = groupService;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping("/")
     public String showStudents(Model model) {
         model.addAttribute("students", studentService.findAll().get());
         model.addAttribute("groups", groupService.findAll().get());
-        model.addAttribute("student", new Student.Builder().build());
+        model.addAttribute("student", new StudentDto.Builder().build());
         return "students";
     }
 
     @PostMapping("/")
-    public String createStudent(@ModelAttribute("student") Student student) {
-        studentService.create(student);
+    public String createStudent(@ModelAttribute("student") StudentDto studentDto) {
+        studentService.create(dtoMapper.toEntity(studentDto));
         return "redirect:/students/";
     }
 
@@ -44,13 +48,14 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public String showStudentById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("student", studentService.findById(id).get());
+        model.addAttribute("student", dtoMapper.toDto(studentService.findById(id).get()));
+        model.addAttribute("groups", groupService.findAll().get());
         return "student_page";
     }
 
     @PostMapping("/{id}")
-    public String updateStudent(@ModelAttribute("student") Student student) {
-        studentService.update(student);
+    public String updateStudent(@ModelAttribute("student") StudentDto studentDto) {
+        studentService.update(dtoMapper.toEntity(studentDto));
         return "redirect:/students/{id}";
     }
 }

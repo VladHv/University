@@ -4,17 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.foxminded.herasimov.university.entity.Group;
-import ua.foxminded.herasimov.university.entity.Lesson;
-import ua.foxminded.herasimov.university.entity.Teacher;
-import ua.foxminded.herasimov.university.entity.Timetable;
+import ua.foxminded.herasimov.university.dto.impl.TimetableDto;
+import ua.foxminded.herasimov.university.dto.impl.TimetableDtoMapper;
 import ua.foxminded.herasimov.university.service.impl.GroupServiceImpl;
 import ua.foxminded.herasimov.university.service.impl.LessonServiceImpl;
 import ua.foxminded.herasimov.university.service.impl.TeacherServiceImpl;
 import ua.foxminded.herasimov.university.service.impl.TimetableServiceImpl;
 
 import java.time.DayOfWeek;
-import java.util.List;
 
 @Controller
 @RequestMapping("/timetables")
@@ -24,36 +21,35 @@ public class TimetableController {
     private LessonServiceImpl lessonService;
     private TeacherServiceImpl teacherService;
     private GroupServiceImpl groupService;
+    private TimetableDtoMapper dtoMapper;
 
     @Autowired
     public TimetableController(TimetableServiceImpl timetableService,
                                LessonServiceImpl lessonService,
                                TeacherServiceImpl teacherService,
-                               GroupServiceImpl groupService) {
+                               GroupServiceImpl groupService,
+                               TimetableDtoMapper dtoMapper) {
         this.timetableService = timetableService;
         this.lessonService = lessonService;
         this.teacherService = teacherService;
         this.groupService = groupService;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping("/")
     public String showAllTimetables(Model model) {
-        List<Timetable> timetables = timetableService.findAll().get();
-        List<Lesson> lessons = lessonService.findAll().get();
-        List<Teacher> teachers = teacherService.findAll().get();
-        List<Group> groups = groupService.findAll().get();
-        model.addAttribute("timetables", timetables);
-        model.addAttribute("timetable", new Timetable.Builder().build());
-        model.addAttribute("lessonsList", lessons);
-        model.addAttribute("teachersList", teachers);
-        model.addAttribute("groupsList", groups);
+        model.addAttribute("timetables", timetableService.findAll().get());
+        model.addAttribute("timetable", new TimetableDto.Builder().build());
+        model.addAttribute("lessonsList", lessonService.findAll().get());
+        model.addAttribute("teachersList", teacherService.findAll().get());
+        model.addAttribute("groupsList", groupService.findAll().get());
         model.addAttribute("daysOfWeek", DayOfWeek.values());
         return "timetable";
     }
 
     @PostMapping("/")
-    public String createTimetable(@ModelAttribute("timetable") Timetable timetable) {
-        timetableService.create(timetable);
+    public String createTimetable(@ModelAttribute("timetable") TimetableDto timetableDto) {
+        timetableService.create(dtoMapper.toEntity(timetableDto));
         return "redirect:/timetables/";
     }
 
@@ -65,20 +61,17 @@ public class TimetableController {
 
     @GetMapping("/{id}")
     public String showTimetableById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("timetable", timetableService.findById(id).get());
-        List<Lesson> lessons = lessonService.findAll().get();
-        List<Teacher> teachers = teacherService.findAll().get();
-        List<Group> groups = groupService.findAll().get();
-        model.addAttribute("lessonsList", lessons);
-        model.addAttribute("teachersList", teachers);
-        model.addAttribute("groupsList", groups);
+        model.addAttribute("timetable", dtoMapper.toDto(timetableService.findById(id).get()));
+        model.addAttribute("lessonsList", lessonService.findAll().get());
+        model.addAttribute("teachersList", teacherService.findAll().get());
+        model.addAttribute("groupsList", groupService.findAll().get());
         model.addAttribute("daysOfWeek", DayOfWeek.values());
         return "timetable_page";
     }
 
     @PostMapping("/{id}")
-    public String updateTimetable(@ModelAttribute("timetable") Timetable timetable) {
-        timetableService.update(timetable);
+    public String updateTimetable(@ModelAttribute("timetable") TimetableDto timetableDto) {
+        timetableService.update(dtoMapper.toEntity(timetableDto));
         return "redirect:/timetables/{id}";
     }
 }
