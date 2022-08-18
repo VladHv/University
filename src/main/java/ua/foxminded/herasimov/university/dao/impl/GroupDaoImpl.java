@@ -2,14 +2,15 @@ package ua.foxminded.herasimov.university.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.foxminded.herasimov.university.dao.GroupDao;
 import ua.foxminded.herasimov.university.entity.Group;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -23,11 +24,11 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     @Transactional
-    public Group getGroupByStudentId(Integer studentId) {
+    public Optional<Group> getGroupByStudentId(Integer studentId) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select s.group from Student s where s.id =:id");
+        TypedQuery<Group> query = session.createQuery("select s.group from Student s where s.id =:id", Group.class);
         query.setParameter("id", studentId);
-        return (Group) query.getSingleResult();
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
@@ -39,9 +40,9 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     @Transactional
-    public Group findById(Integer id) {
+    public Optional<Group> findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Group.class, id);
+        return Optional.ofNullable(session.get(Group.class, id));
     }
 
     @Override
@@ -68,8 +69,8 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     @Transactional
-    public List<Group> findAll() {
+    public Optional<List<Group>> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Group g order by g.id").list();
+        return Optional.ofNullable(session.createQuery("select g from Group g order by g.id", Group.class).list());
     }
 }

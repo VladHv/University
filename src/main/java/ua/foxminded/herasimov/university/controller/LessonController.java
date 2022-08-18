@@ -20,7 +20,7 @@ public class LessonController {
 
     @GetMapping("/")
     public String showLessons(Model model) {
-        model.addAttribute("lessons", service.findAll().get());
+        model.addAttribute("lessons", service.findAll());
         model.addAttribute("lesson", new Lesson.Builder().build());
         return "lessons";
     }
@@ -39,7 +39,7 @@ public class LessonController {
 
     @GetMapping("/{id}")
     public String showLessonById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("lesson", service.findById(id).get());
+        model.addAttribute("lesson", service.findById(id));
         return "lesson_page";
     }
 

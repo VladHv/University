@@ -9,6 +9,7 @@ import ua.foxminded.herasimov.university.dao.StudentDao;
 import ua.foxminded.herasimov.university.entity.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class StudentDaoImpl implements StudentDao {
@@ -29,9 +30,9 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     @Transactional
-    public Student findById(Integer id) {
+    public Optional<Student> findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Student.class, id);
+        return Optional.ofNullable(session.get(Student.class, id));
     }
 
     @Override
@@ -58,8 +59,8 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     @Transactional
-    public List<Student> findAll() {
+    public Optional<List<Student>> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Student s order by s.id").list();
+        return Optional.ofNullable(session.createQuery("select s from Student s order by s.id", Student.class).list());
     }
 }

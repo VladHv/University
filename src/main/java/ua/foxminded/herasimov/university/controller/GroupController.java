@@ -20,7 +20,7 @@ public class GroupController {
 
     @GetMapping("/")
     public String showGroups(Model model) {
-        model.addAttribute("groups", service.findAll().get());
+        model.addAttribute("groups", service.findAll());
         model.addAttribute("group", new Group.Builder().build());
         return "groups";
     }
@@ -39,7 +39,7 @@ public class GroupController {
 
     @GetMapping("/{id}")
     public String showGroupById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("group", service.findById(id).get());
+        model.addAttribute("group", service.findById(id));
         return "group_page";
     }
 

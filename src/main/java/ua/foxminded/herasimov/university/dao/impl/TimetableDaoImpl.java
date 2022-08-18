@@ -9,6 +9,7 @@ import ua.foxminded.herasimov.university.dao.TimetableDao;
 import ua.foxminded.herasimov.university.entity.Timetable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TimetableDaoImpl implements TimetableDao {
@@ -29,9 +30,9 @@ public class TimetableDaoImpl implements TimetableDao {
 
     @Override
     @Transactional
-    public Timetable findById(Integer id) {
+    public Optional<Timetable> findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Timetable.class, id);
+        return Optional.ofNullable(session.get(Timetable.class, id));
     }
 
     @Override
@@ -58,8 +59,9 @@ public class TimetableDaoImpl implements TimetableDao {
 
     @Override
     @Transactional
-    public List<Timetable> findAll() {
+    public Optional<List<Timetable>> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Timetable t order by t.id").list();
+        return Optional.ofNullable(
+            session.createQuery("select t from Timetable t order by t.id", Timetable.class).list());
     }
 }

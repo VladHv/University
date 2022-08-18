@@ -3,7 +3,6 @@ package ua.foxminded.herasimov.university.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import ua.foxminded.herasimov.university.dao.GroupDao;
 import ua.foxminded.herasimov.university.entity.Group;
@@ -11,7 +10,6 @@ import ua.foxminded.herasimov.university.exception.ServiceException;
 import ua.foxminded.herasimov.university.service.GroupService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -24,43 +22,32 @@ public class GroupServiceImpl implements GroupService {
         this.dao = dao;
     }
 
-    public Optional<Group> getGroupByStudentId(Integer id) {
+    public Group getGroupByStudentId(Integer id) {
         logger.info("Getting group by student id: {}", id);
-        try {
-            logger.info("Getting group ID by student ID: {}", id);
-            Group group = dao.getGroupByStudentId(id);
-            return Optional.ofNullable(group);
-        } catch (DataAccessException e) {
-            logger.error("Group not found by Student id: {}", id);
-            throw new ServiceException("Group not found by Student id - " + id, e);
-        }
+        return dao.getGroupByStudentId(id)
+                  .orElseThrow(() -> new ServiceException("Group not found by Student id - " + id));
     }
 
     public void create(Group group) {
         logger.info("Starting create: {}", group);
         try {
             dao.create(group);
-        } catch (DataAccessException e) {
+        } catch (RuntimeException e) {
             logger.error("Group {} cannot be found", group);
             throw new ServiceException("Not created: " + group.toString(), e);
         }
     }
 
-    public Optional<Group> findById(Integer id) {
+    public Group findById(Integer id) {
         logger.info("Finding group by id: {}", id);
-        try {
-            return Optional.ofNullable(dao.findById(id));
-        } catch (DataAccessException e) {
-            logger.error("Group with id '{}' cannot be found", id);
-            throw new ServiceException("Group not found by id: " + id, e);
-        }
+        return dao.findById(id).orElseThrow(() -> new ServiceException("Group not found by id: " + id));
     }
 
     public void update(Group group) {
         logger.info("Updating group {}", group);
         try {
             dao.update(group);
-        } catch (DataAccessException e) {
+        } catch (RuntimeException e) {
             logger.error("Group {} cannot be updated", group);
             throw new ServiceException("Not updated: " + group, e);
         }
@@ -70,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
         logger.info("Deleting group by id: {}", id);
         try {
             dao.delete(id);
-        } catch (DataAccessException e) {
+        } catch (RuntimeException e) {
             logger.error("Group with id '{}' cannot be deleted", id);
             throw new ServiceException("Group by id: " + id + " not deleted", e);
         }
@@ -80,19 +67,14 @@ public class GroupServiceImpl implements GroupService {
         logger.info("Deleting group: {}", group);
         try {
             dao.delete(group);
-        } catch (DataAccessException e) {
+        } catch (RuntimeException e) {
             logger.error("Group {} cannot be deleted", group);
             throw new ServiceException("Not deleted: " + group, e);
         }
     }
 
-    public Optional<List<Group>> findAll() {
+    public List<Group> findAll() {
         logger.info("Staring to find all groups");
-        try {
-            return Optional.ofNullable(dao.findAll());
-        } catch (DataAccessException e) {
-            logger.info("All groups not found");
-            throw new ServiceException("All groups not found", e);
-        }
+        return dao.findAll().orElseThrow(() -> new ServiceException("All groups not found"));
     }
 }

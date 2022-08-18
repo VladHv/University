@@ -21,7 +21,7 @@ public class TeacherController {
 
     @GetMapping("/")
     public String showTeachers(Model model) {
-        model.addAttribute("teachers", service.findAll().get());
+        model.addAttribute("teachers", service.findAll());
         model.addAttribute("teacher", new Teacher.Builder().build());
         model.addAttribute("positions", TeacherPosition.values());
         return "teachers";
@@ -41,7 +41,7 @@ public class TeacherController {
 
     @GetMapping("/{id}")
     public String showTeacherById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("teacher", service.findById(id).get());
+        model.addAttribute("teacher", service.findById(id));
         model.addAttribute("positions", TeacherPosition.values());
         return "teacher_page";
     }

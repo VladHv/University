@@ -28,8 +28,8 @@ public class StudentController {
 
     @GetMapping("/")
     public String showStudents(Model model) {
-        model.addAttribute("students", studentService.findAll().get());
-        model.addAttribute("groups", groupService.findAll().get());
+        model.addAttribute("students", studentService.findAll());
+        model.addAttribute("groups", groupService.findAll());
         model.addAttribute("student", new StudentDto.Builder().build());
         return "students";
     }
@@ -48,8 +48,8 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public String showStudentById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("student", dtoMapper.toDto(studentService.findById(id).get()));
-        model.addAttribute("groups", groupService.findAll().get());
+        model.addAttribute("student", dtoMapper.toDto(studentService.findById(id)));
+        model.addAttribute("groups", groupService.findAll());
         return "student_page";
     }
 

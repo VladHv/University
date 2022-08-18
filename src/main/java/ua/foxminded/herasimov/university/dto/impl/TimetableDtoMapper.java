@@ -39,11 +39,11 @@ public class TimetableDtoMapper implements DtoMapper<TimetableDto, Timetable> {
     @Override
     public Timetable toEntity(TimetableDto dto) {
         return new Timetable.Builder().withId(dto.getId())
-                                         .withGroup(groupDao.findById(dto.getGroupId()))
-                                         .withTeacher(teacherDao.findById(dto.getTeacherId()))
-                                         .withLesson(lessonDao.findById(dto.getLessonId()))
-                                         .withDay(DayOfWeek.of(dto.getDay()))
-                                         .withTime(dto.getTime())
-                                         .build();
+                                      .withGroup(groupDao.findById(dto.getGroupId()).orElseThrow())
+                                      .withTeacher(teacherDao.findById(dto.getTeacherId()).orElseThrow())
+                                      .withLesson(lessonDao.findById(dto.getLessonId()).orElseThrow())
+                                      .withDay(DayOfWeek.of(dto.getDay()))
+                                      .withTime(dto.getTime())
+                                      .build();
     }
 }

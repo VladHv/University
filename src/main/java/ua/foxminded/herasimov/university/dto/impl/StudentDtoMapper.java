@@ -30,11 +30,11 @@ public class StudentDtoMapper implements DtoMapper<StudentDto, Student> {
     @Override
     public Student toEntity(StudentDto dto) {
         return new Student.Builder().withId(dto.getId())
-                                       .withFirstName(dto.getFirstName())
-                                       .withLastName(dto.getLastName())
-                                       .withFaculty(dto.getFaculty())
-                                       .withTicket(dto.getTicket())
-                                       .withGroup(groupDao.findById(dto.getGroupId()))
-                                       .build();
+                                    .withFirstName(dto.getFirstName())
+                                    .withLastName(dto.getLastName())
+                                    .withFaculty(dto.getFaculty())
+                                    .withTicket(dto.getTicket())
+                                    .withGroup(groupDao.findById(dto.getGroupId()).orElseThrow())
+                                    .build();
     }
 }

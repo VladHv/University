@@ -1,12 +1,13 @@
 package ua.foxminded.herasimov.university.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Dao<K extends Number, T> {
 
     void create(T entity);
 
-    T findById(K id);
+    Optional<T> findById(K id);
 
     void update(T entity);
 
@@ -14,5 +15,5 @@ public interface Dao<K extends Number, T> {
 
     void delete(T entity);
 
-    List<T> findAll();
+    Optional<List<T>> findAll();
 }

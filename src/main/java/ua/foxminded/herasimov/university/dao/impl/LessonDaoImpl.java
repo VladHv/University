@@ -9,6 +9,7 @@ import ua.foxminded.herasimov.university.dao.LessonDao;
 import ua.foxminded.herasimov.university.entity.Lesson;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class LessonDaoImpl implements LessonDao {
@@ -29,9 +30,9 @@ public class LessonDaoImpl implements LessonDao {
 
     @Override
     @Transactional
-    public Lesson findById(Integer id) {
+    public Optional<Lesson> findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Lesson.class, id);
+        return Optional.ofNullable(session.get(Lesson.class, id));
     }
 
     @Override
@@ -58,8 +59,8 @@ public class LessonDaoImpl implements LessonDao {
 
     @Override
     @Transactional
-    public List<Lesson> findAll() {
+    public Optional<List<Lesson>> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Lesson l order by l.id").list();
+        return Optional.ofNullable(session.createQuery("select l from Lesson l order by l.id", Lesson.class).list());
     }
 }

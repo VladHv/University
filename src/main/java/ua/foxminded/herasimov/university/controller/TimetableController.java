@@ -38,11 +38,11 @@ public class TimetableController {
 
     @GetMapping("/")
     public String showAllTimetables(Model model) {
-        model.addAttribute("timetables", timetableService.findAll().get());
+        model.addAttribute("timetables", timetableService.findAll());
         model.addAttribute("timetable", new TimetableDto.Builder().build());
-        model.addAttribute("lessonsList", lessonService.findAll().get());
-        model.addAttribute("teachersList", teacherService.findAll().get());
-        model.addAttribute("groupsList", groupService.findAll().get());
+        model.addAttribute("lessonsList", lessonService.findAll());
+        model.addAttribute("teachersList", teacherService.findAll());
+        model.addAttribute("groupsList", groupService.findAll());
         model.addAttribute("daysOfWeek", DayOfWeek.values());
         return "timetable";
     }
@@ -61,10 +61,10 @@ public class TimetableController {
 
     @GetMapping("/{id}")
     public String showTimetableById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("timetable", dtoMapper.toDto(timetableService.findById(id).get()));
-        model.addAttribute("lessonsList", lessonService.findAll().get());
-        model.addAttribute("teachersList", teacherService.findAll().get());
-        model.addAttribute("groupsList", groupService.findAll().get());
+        model.addAttribute("timetable", dtoMapper.toDto(timetableService.findById(id)));
+        model.addAttribute("lessonsList", lessonService.findAll());
+        model.addAttribute("teachersList", teacherService.findAll());
+        model.addAttribute("groupsList", groupService.findAll());
         model.addAttribute("daysOfWeek", DayOfWeek.values());
         return "timetable_page";
     }
