@@ -1,15 +1,33 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "timetables")
 public class Timetable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private Integer lessonId;
-    private Integer teacherId;
-    private Integer groupId;
-    private Integer day;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Lesson lesson;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Teacher teacher;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Group group;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "day")
+    private DayOfWeek day;
+
+    @Column(name = "time")
     private LocalTime time;
 
     public static class Builder {
@@ -29,22 +47,22 @@ public class Timetable {
             return this;
         }
 
-        public Builder withLessonId(Integer lessonId) {
-            newTimetable.lessonId = lessonId;
+        public Builder withLesson(Lesson lesson) {
+            newTimetable.lesson = lesson;
             return this;
         }
 
-        public Builder withTeacherId(Integer teacherId) {
-            newTimetable.teacherId = teacherId;
+        public Builder withTeacher(Teacher teacher) {
+            newTimetable.teacher = teacher;
             return this;
         }
 
-        public Builder withGroupId(Integer groupId) {
-            newTimetable.groupId = groupId;
+        public Builder withGroup(Group group) {
+            newTimetable.group = group;
             return this;
         }
 
-        public Builder withDay(Integer day) {
+        public Builder withDay(DayOfWeek day) {
             newTimetable.day = day;
             return this;
         }
@@ -62,35 +80,35 @@ public class Timetable {
         this.id = id;
     }
 
-    public Integer getLessonId() {
-        return lessonId;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setLessonId(Integer lessonId) {
-        this.lessonId = lessonId;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
-    public Integer getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
-    public Integer getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    public Integer getDay() {
+    public DayOfWeek getDay() {
         return day;
     }
 
-    public void setDay(Integer day) {
+    public void setDay(DayOfWeek day) {
         this.day = day;
     }
 
@@ -107,24 +125,23 @@ public class Timetable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Timetable timetable = (Timetable) o;
-        return Objects.equals(id, timetable.id) && Objects.equals(lessonId, timetable.lessonId) &&
-               Objects.equals(teacherId, timetable.teacherId) &&
-               Objects.equals(groupId, timetable.groupId) && Objects.equals(day, timetable.day) &&
-               Objects.equals(time, timetable.time);
+        return Objects.equals(id, timetable.id) && Objects.equals(lesson, timetable.lesson) &&
+               Objects.equals(teacher, timetable.teacher) && Objects.equals(group, timetable.group) &&
+               day == timetable.day && Objects.equals(time, timetable.time);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lessonId, teacherId, groupId, day, time);
+        return Objects.hash(id, lesson, teacher, group, day, time);
     }
 
     @Override
     public String toString() {
         return "Timetable{" +
-               "Id=" + id +
-               ", lessonId=" + lessonId +
-               ", teacherId=" + teacherId +
-               ", groupId=" + groupId +
+               "id=" + id +
+               ", lesson=" + lesson +
+               ", teacher=" + teacher +
+               ", group=" + group +
                ", day=" + day +
                ", time=" + time +
                '}';

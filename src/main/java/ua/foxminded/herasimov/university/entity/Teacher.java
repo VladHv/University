@@ -1,9 +1,17 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "teachers")
 public class Teacher extends Person {
+
+    @Column(name = "department")
     private String department;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "position")
     private TeacherPosition position;
 
     protected Teacher() {
@@ -60,5 +68,16 @@ public class Teacher extends Person {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), department, position);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+               "id=" + id +
+               ", firstName='" + firstName + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", department='" + department + '\'' +
+               ", position=" + position +
+               '}';
     }
 }

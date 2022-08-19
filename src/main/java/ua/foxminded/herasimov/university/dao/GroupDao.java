@@ -2,7 +2,9 @@ package ua.foxminded.herasimov.university.dao;
 
 import ua.foxminded.herasimov.university.entity.Group;
 
+import java.util.Optional;
+
 public interface GroupDao extends Dao<Integer, Group> {
 
-    Integer getGroupIdByStudentId(Integer studentId);
+    Optional<Group> getGroupByStudentId(Integer studentId);
 }

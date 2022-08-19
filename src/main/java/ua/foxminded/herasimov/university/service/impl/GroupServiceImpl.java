@@ -4,95 +4,77 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.foxminded.herasimov.university.dao.impl.GroupDaoImpl;
+import ua.foxminded.herasimov.university.dao.GroupDao;
 import ua.foxminded.herasimov.university.entity.Group;
-import ua.foxminded.herasimov.university.service.GroupService;
 import ua.foxminded.herasimov.university.exception.ServiceException;
+import ua.foxminded.herasimov.university.service.GroupService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
-    private final GroupDaoImpl dao;
+    private final GroupDao dao;
 
     @Autowired
-    public GroupServiceImpl(GroupDaoImpl dao) {
+    public GroupServiceImpl(GroupDao dao) {
         this.dao = dao;
     }
 
-    public Optional<Group> getGroupByStudentId(Integer id) {
+    public Group getGroupByStudentId(Integer id) {
         logger.info("Getting group by student id: {}", id);
-        try {
-            logger.info("Getting group ID by student ID: {}", id);
-            Integer groupId = dao.getGroupIdByStudentId(id);
-            logger.info("Finding group by ID: {}", groupId);
-            return Optional.ofNullable(dao.findById(groupId));
-        } catch (RuntimeException e) {
-            logger.error("Group not found by Student id: {}", id);
-            throw new ServiceException("Group not found by Student id - " + id, e);
-        }
+        return dao.getGroupByStudentId(id)
+                  .orElseThrow(() -> new ServiceException("Group not found by Student id - " + id));
     }
 
-    public int create(Group group) {
+    public void create(Group group) {
         logger.info("Starting create: {}", group);
         try {
-            return dao.create(group);
+            dao.create(group);
         } catch (RuntimeException e) {
             logger.error("Group {} cannot be found", group);
             throw new ServiceException("Not created: " + group.toString(), e);
         }
     }
 
-    public Optional<Group> findById(Integer id) {
+    public Group findById(Integer id) {
         logger.info("Finding group by id: {}", id);
-        try {
-            return Optional.ofNullable(dao.findById(id));
-        } catch (RuntimeException e) {
-            logger.error("Group with id '{}' cannot be found", id);
-            throw new ServiceException("Group not found by id: " + id, e);
-        }
+        return dao.findById(id).orElseThrow(() -> new ServiceException("Group not found by id: " + id));
     }
 
-    public int update(Group group) {
+    public void update(Group group) {
         logger.info("Updating group {}", group);
         try {
-            return dao.update(group);
+            dao.update(group);
         } catch (RuntimeException e) {
             logger.error("Group {} cannot be updated", group);
             throw new ServiceException("Not updated: " + group, e);
         }
     }
 
-    public int delete(Integer id) {
+    public void delete(Integer id) {
         logger.info("Deleting group by id: {}", id);
         try {
-            return dao.delete(id);
+            dao.delete(id);
         } catch (RuntimeException e) {
             logger.error("Group with id '{}' cannot be deleted", id);
             throw new ServiceException("Group by id: " + id + " not deleted", e);
         }
     }
 
-    public int delete(Group group) {
+    public void delete(Group group) {
         logger.info("Deleting group: {}", group);
         try {
-            return dao.delete(group);
+            dao.delete(group);
         } catch (RuntimeException e) {
             logger.error("Group {} cannot be deleted", group);
             throw new ServiceException("Not deleted: " + group, e);
         }
     }
 
-    public Optional<List<Group>> findAll() {
+    public List<Group> findAll() {
         logger.info("Staring to find all groups");
-        try {
-            return Optional.ofNullable(dao.findAll());
-        } catch (RuntimeException e) {
-            logger.info("All groups not found");
-            throw new ServiceException("All groups not found", e);
-        }
+        return dao.findAll().orElseThrow(() -> new ServiceException("All groups not found"));
     }
 }

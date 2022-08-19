@@ -1,61 +1,66 @@
 package ua.foxminded.herasimov.university.dao.impl;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.foxminded.herasimov.university.dao.StudentDao;
-import ua.foxminded.herasimov.university.dao.mapper.StudentMapper;
 import ua.foxminded.herasimov.university.entity.Student;
 
-import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class StudentDaoImpl implements StudentDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private SessionFactory sessionFactory;
 
-    public StudentDaoImpl(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    @Autowired
+    public StudentDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public int create(Student entity) {
-        return jdbcTemplate.update("INSERT INTO students (first_name, last_name, faculty, ticket) VALUES (?, ?, ?, ?)",
-                            entity.getFirstName(),
-                            entity.getLastName(),
-                            entity.getFaculty(),
-                            entity.getTicket());
+    @Transactional
+    public void create(Student entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(entity);
     }
 
     @Override
-    public Student findById(Integer id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM students WHERE id = (?)", new StudentMapper(), id);
+    @Transactional
+    public Optional<Student> findById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        return Optional.ofNullable(session.get(Student.class, id));
     }
 
     @Override
-    public int update(Student entity) {
-        return jdbcTemplate.update("UPDATE students SET first_name = (?), last_name = (?), faculty = (?), ticket = (?) " +
-                             "WHERE" +
-                            " id = (?)",
-                            entity.getFirstName(),
-                            entity.getLastName(),
-                            entity.getFaculty(),
-                            entity.getTicket(),
-                            entity.getId());
+    @Transactional
+    public void update(Student entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(entity);
     }
 
     @Override
-    public int delete(Integer id) {
-        return jdbcTemplate.update("DELETE FROM students WHERE id = (?)", id);
+    @Transactional
+    public void delete(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Student student = session.get(Student.class, id);
+        session.remove(student);
     }
 
     @Override
-    public int delete(Student entity) {
-        return jdbcTemplate.update("DELETE FROM students WHERE id = (?)", entity.getId());
+    @Transactional
+    public void delete(Student entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(entity);
     }
 
     @Override
-    public List<Student> findAll() {
-        return jdbcTemplate.query("SELECT * FROM students", new StudentMapper());
+    @Transactional
+    public Optional<List<Student>> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        return Optional.ofNullable(session.createQuery("select s from Student s order by s.id", Student.class).list());
     }
 }

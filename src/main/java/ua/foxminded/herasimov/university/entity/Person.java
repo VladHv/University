@@ -1,10 +1,19 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@MappedSuperclass
 public abstract class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
+
+    @Column
     protected String firstName;
+
+    @Column
     protected String lastName;
 
     protected Person() {

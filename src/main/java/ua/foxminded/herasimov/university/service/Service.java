@@ -1,19 +1,18 @@
 package ua.foxminded.herasimov.university.service;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface Service<K extends Number, T> {
 
-    int create(T entity);
+    void create(T entity);
 
-    Optional<T> findById(K id);
+    T findById(K id);
 
-    int update(T entity);
+    void update(T entity);
 
-    int delete(K id);
+    void delete(K id);
 
-    int delete(T entity);
+    void delete(T entity);
 
-    Optional<List<T>> findAll();
+    List<T> findAll();
 }

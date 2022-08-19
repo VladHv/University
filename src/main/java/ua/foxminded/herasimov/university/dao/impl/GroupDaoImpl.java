@@ -1,55 +1,76 @@
 package ua.foxminded.herasimov.university.dao.impl;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.foxminded.herasimov.university.dao.GroupDao;
-import ua.foxminded.herasimov.university.dao.mapper.GroupMapper;
 import ua.foxminded.herasimov.university.entity.Group;
 
-import javax.sql.DataSource;
+import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
 
-    private final JdbcTemplate jdbcTemplate;
+    private SessionFactory sessionFactory;
 
-    public GroupDaoImpl(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    @Autowired
+    public GroupDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public Integer getGroupIdByStudentId(Integer studentId) {
-        return jdbcTemplate.queryForObject("SELECT group_id FROM students WHERE id = (?)", Integer.class, studentId);
+    @Transactional
+    public Optional<Group> getGroupByStudentId(Integer studentId) {
+        Session session = sessionFactory.getCurrentSession();
+        TypedQuery<Group> query = session.createQuery("select s.group from Student s where s.id =:id", Group.class);
+        query.setParameter("id", studentId);
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
-    public int create(Group entity) {
-        return jdbcTemplate.update("INSERT INTO groups (name) VALUES (?)", entity.getName());
+    @Transactional
+    public void create(Group entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(entity);
     }
 
     @Override
-    public Group findById(Integer id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM groups WHERE id = (?)", new GroupMapper(), id);
+    @Transactional
+    public Optional<Group> findById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        return Optional.ofNullable(session.get(Group.class, id));
     }
 
     @Override
-    public int update(Group entity) {
-        return jdbcTemplate.update("UPDATE groups SET name = (?) WHERE id = (?)", entity.getName(), entity.getId());
+    @Transactional
+    public void update(Group entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(entity);
     }
 
     @Override
-    public int delete(Integer id) {
-        return jdbcTemplate.update("DELETE FROM groups WHERE id = (?)", id);
+    @Transactional
+    public void delete(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Group group = session.get(Group.class, id);
+        session.remove(group);
     }
 
     @Override
-    public int delete(Group entity) {
-        return jdbcTemplate.update("DELETE FROM groups WHERE id = (?)", entity.getId());
+    @Transactional
+    public void delete(Group entity) {
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(entity);
     }
 
     @Override
-    public List<Group> findAll() {
-        return jdbcTemplate.query("SELECT * FROM groups", new GroupMapper());
+    @Transactional
+    public Optional<List<Group>> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        return Optional.ofNullable(session.createQuery("select g from Group g order by g.id", Group.class).list());
     }
 }

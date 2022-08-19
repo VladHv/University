@@ -1,11 +1,21 @@
 package ua.foxminded.herasimov.university.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "lessons")
 public class Lesson {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "classroom")
     private Integer classroom;
 
     public static class Builder {
@@ -70,5 +80,14 @@ public class Lesson {
     @Override
     public int hashCode() {
         return Objects.hash(name, classroom);
+    }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", classroom=" + classroom +
+               '}';
     }
 }
