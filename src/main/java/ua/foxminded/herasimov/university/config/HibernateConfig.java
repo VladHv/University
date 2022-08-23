@@ -9,12 +9,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.jndi.JndiTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -34,13 +33,17 @@ public class HibernateConfig {
     }
 
     @Bean
-    public DataSource dataSource() throws NamingException {
-        JndiTemplate jndiTemplate = new JndiTemplate();
-        return (DataSource) jndiTemplate.lookup(env.getProperty("spring.datasource.jndi-name"));
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        return dataSource;
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() throws NamingException {
+    public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("ua.foxminded.herasimov.university.entity");
@@ -49,7 +52,7 @@ public class HibernateConfig {
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager() throws NamingException {
+    public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
