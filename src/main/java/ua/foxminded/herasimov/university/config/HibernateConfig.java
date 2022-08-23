@@ -1,10 +1,14 @@
 package ua.foxminded.herasimov.university.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -17,23 +21,22 @@ import java.util.Properties;
 @Configuration
 @ComponentScan("ua.foxminded.herasimov.university")
 @EnableTransactionManagement
-@PropertySource("classpath:application.properties")
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,
+    DataSourceTransactionManagerAutoConfiguration.class,
+    HibernateJpaAutoConfiguration.class})
 public class HibernateConfig {
 
-    @Value("${hibernate.dialect}")
-    private String dialect;
+    private Environment env;
 
-    @Value("${hibernate.show_sql}")
-    private String showSql;
-
-    @Value("${hibernate.hbm2ddl.auto}")
-    private String hbm2ddlAuto;
-
+    @Autowired
+    public HibernateConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource dataSource() throws NamingException {
         JndiTemplate jndiTemplate = new JndiTemplate();
-        return (DataSource) jndiTemplate.lookup("java:/comp/env/jdbc/University");
+        return (DataSource) jndiTemplate.lookup(env.getProperty("spring.datasource.jndi-name"));
     }
 
     @Bean
@@ -54,9 +57,11 @@ public class HibernateConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", dialect);
-        properties.put("hibernate.show_sql", showSql);
-        properties.put("hibernate.hbm2ddl.auto", hbm2ddlAuto);
+        properties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
+        properties.put("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
+        properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
+        properties.put("current_session_context_class",
+                       env.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
         return properties;
     }
 
